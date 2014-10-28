@@ -8,10 +8,19 @@ tr, td {
   width: 20px;
   padding: 0;
   margin: 0;
+  background-color: #e1e1e1;
+  color: #e1e1e1;
 }
 
 .alive {
-  background-color: red;
+  background-color: #ff5fa3;
+  color: #ff5fa3;
+}
+
+input {
+  padding: 10px;
+  height: 50px;
+  width: 70px;
 }
 
 
