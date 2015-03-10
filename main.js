@@ -10,14 +10,11 @@ function matrixCreator(x, y) {
 }
 
 function generateNewCycle(matrix){
-  //console.log(matrix);
   var $table = document.querySelector("table");
   $table.innerHTML = '';
   matrix.forEach(function(row){
-    // var row = matrix[i];
     $tr = document.createElement("tr");
     row.forEach(function(cell){
-      // var cell = row[i];
       var $td =  document.createElement("td");
 
       if (cell === 1) {
@@ -36,7 +33,6 @@ function generateNewCycle(matrix){
 }
 
 function livingNeighborCount(x, y){
-  //console.log(x, y);
   var neighborCounter = [];
   if (x-1 >= 0 && y-1 >= 0 && matrix[x-1][y-1] === 1){
     neighborCounter.push(1);
@@ -158,7 +154,7 @@ function calculateNextState(currentState) {
 
 //var matrix =/*beacons*/ [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0], [0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0], [0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0], [0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0], [0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0], [0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
 
-var matrix = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+var gliderGun = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
               [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -229,21 +225,43 @@ var matrix = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
 //var matrix = matrixCreator(20, 30);
 
-//var matrix = [[0, 1, 1, 1, 0, 0], [0, 0, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
+var smallGlider = [[0, 1, 1, 1, 0, 0], [0, 0, 0, 1, 0, 0], [0, 0, 1, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]];
+
+var matrix = [];
 
 $(document).ready(function(){
-  generateNewCycle(matrix);
+  
+  //var matrix = [];
 
-  document.querySelector("#tick").addEventListener('click', function(){
-    nextCycle();
+  $('#generate_button').click(function(){
+    matrix = matrixCreator($('#x-input').val(), $('#y-input').val());
+    $('table').empty();
+    generateNewCycle(matrix);
+    console.log($('#x-input').value);
   });
+
 
   function nextCycle(){
     matrix = calculateNextState(matrix);
     generateNewCycle(matrix);
+    /*$('#pause_button').click(function(){
+      return;
+    });*/
+    //setInterval(nextCycle, 500);
   }
 
-  setInterval(nextCycle, 50);
+  $('#pause').click(function(){
+    
+  });
+
+  
+  if ($('#pause').attr('class') !== 'paused'){
+    setInterval(nextCycle, 200);
+  }
+
+  $('#start_button').click(function(){
+    nextCycle();
+  });
 });
 
 
