@@ -241,26 +241,26 @@ $(document).ready(function(){
     generateNewCycle(matrix);
   });
 
-  /*$('td').click(function(){
-    console.log($(this));
-    if ($(this).val() === 1){
-      $(this).val() = 0;
+  $(document).on('click', 'td', function(e){
+    var y = $(this).context.cellIndex;
+    var x = $(this).context.parentElement.sectionRowIndex;
+    if (matrix[x][y] === 1){
+      matrix[x][y] = 0;
+      $(this).removeClass('alive').addClass('dead');
       return;
     }
-    if ($(this).val() === 0){
-      $(this).val() = 1;
+    if (matrix[x][y] === 0){
+      matrix[x][y] = 1;
+      $(this).removeClass('dead').addClass('alive');
       return;
     }
-  });*/
+    e.preventDefault();
+  });
 
 
   function nextCycle(){
     matrix = calculateNextState(matrix);
     generateNewCycle(matrix);
-    /*$('#pause_button').click(function(){
-      return;
-    });*/
-    //setInterval(nextCycle, 500);
   }
 
   $('#pause').click(function(){
