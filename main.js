@@ -16,7 +16,7 @@ function generateNewCycle(matrix){
     $tr = document.createElement("tr");
     row.forEach(function(cell){
       var $td =  document.createElement("td");
-
+      $td.classList.add('cell');
       if (cell === 1) {
         $td.classList.add("alive");
         $td.classList.remove("dead");
@@ -233,12 +233,25 @@ $(document).ready(function(){
   
   //var matrix = [];
 
+  var refreshIntervalId;
+
   $('#generate_button').click(function(){
     matrix = matrixCreator($('#x-input').val(), $('#y-input').val());
     $('table').empty();
     generateNewCycle(matrix);
-    console.log($('#x-input').value);
   });
+
+  /*$('td').click(function(){
+    console.log($(this));
+    if ($(this).val() === 1){
+      $(this).val() = 0;
+      return;
+    }
+    if ($(this).val() === 0){
+      $(this).val() = 1;
+      return;
+    }
+  });*/
 
 
   function nextCycle(){
@@ -251,15 +264,19 @@ $(document).ready(function(){
   }
 
   $('#pause').click(function(){
-    
+    if ($('#pause').hasClass('unpaused')){
+      $('#pause').removeClass('unpaused').addClass('paused');
+      clearInterval(refreshIntervalId);
+      return;
+    }
+    if ($('#pause').hasClass('paused')) {
+      $('#pause').removeClass('paused').addClass('unpaused');
+      refreshIntervalId = setInterval(nextCycle, 200);
+      return;
+    }
   });
 
-  
-  if ($('#pause').attr('class') !== 'paused'){
-    setInterval(nextCycle, 200);
-  }
-
-  $('#start_button').click(function(){
+  $('#next_button').click(function(){
     nextCycle();
   });
 });

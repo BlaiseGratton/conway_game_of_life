@@ -23,4 +23,19 @@ input {
   width: 70px;
 }
 
+#pause {
+  height: 30px;
+  width: 30px;
+}
 
+.paused {
+  content: '||';
+  font-weight: 800;
+  color: red;
+  background-color: lightgrey;
+}
+
+.unpaused {
+  content: '';
+  background-color: green;
+}
